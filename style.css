@@ -1,0 +1,68 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container-fluid, .row, .col-md-8 {
+  height: 100%;
+}
+
+
+#map {
+  height: 100%; /* This will make the map take the full height of its parent */
+  /*width: 100%;  This will make the map take the full width of its parent */
+}
+
+
+.form-group, #locationDetails {
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+.search-results {
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border: 1px solid #ddd;
+  border-top: none;
+  z-index: 1000;
+  display: none; /* Initially hidden */
+}
+
+.place-result {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.place-result:hover {
+  background-color: #f0f0f0;
+}
+
+#searchbar {
+  position: relative; /* To position results absolutely with respect to this container */
+}
+
+#results {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%; /* Bottom of the search bar */
+  left: 0; /* Align with the left edge of the search bar */
+  right: 0; /* Align with the right edge of the search bar */
+  width: auto; /* It will expand to match the left and right */
+  /* Additional styles for the dropdown */
+  z-index: 10; /* Ensure it's above other content */
+  background-color: #f0f0f0;
+}
+
+#results.show {
+  display: block; /* Show when the class 'show' is added */
+}
+
+.list-group-item {
+  cursor: pointer; /* Indicates that items are clickable */
+  /* Additional styling */
+}
