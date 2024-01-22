@@ -426,7 +426,7 @@ window.onload = function() {
 
 function initClient() {
     //gapi.auth2.init
-    gapi.auth2.init({
+    gapi.client.init({
         apiKey: apiKey,
         clientId: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
         discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
