@@ -320,7 +320,7 @@ $(document).ready(function() {
 
     // Close Modal on Confirm Button
     $("#confirmButton").click(function() {
-        $("#myModal").modal('hide');
+        saveFormData();
     });
 });
 
@@ -402,44 +402,77 @@ function updateSheetMarkers(radius){
 
 }
 
-
-
-
-function handleCredentialResponse(response) {
-    // Send the ID token to your server for validation
-    console.log("ENcoded JWT IF token: " +   response.credential);
-    initClient();
-
+function sendDataToSheet(data) {
+    fetch('https://script.google.com/macros/s/AKfycbyXUH8rGqojkk1RUkF_D7spcToKu_y3ByCxBa_sfJ2ls7nHS3QNgoX2Lyvfnpr0rxqALA/exec', {
+        method: 'POST',
+        contentType: 'application/json',
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Success:', result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
+
+function saveFormData() {
+    // Array to store form values
+    let formData = [];
+
+    // Flag to check if all required fields are filled
+    let allRequiredFilled = true;
+    let missingFieldName = '';
+
+    // Get form elements
+    const formElements = document.getElementById('newLocationForm').elements;
+    for (let i = 0; i < formElements.length; i++) {
+        const field = formElements[i];
+        
+        // Check if field is required and empty
+        if (field.required && !field.value) {
+            allRequiredFilled = false;
+            missingFieldName = field.getAttribute('aria-label') || field.name || field.id;
+            break;
+        }
+
+        // Push value to array, use empty string if value is missing
+        formData.push(field.value || '');
+    }
+
+    if (!allRequiredFilled) {
+        alert(`Please fill in the required field: ${missingFieldName}`);
+        return null; // Or handle this case as needed
+    }
+
+    formData.splice(1,0,currCenter.lat,currCenter.lng);
+
+    
+    // Proceed with the form data
+    fetch('https://script.google.com/macros/s/AKfycbyXUH8rGqojkk1RUkF_D7spcToKu_y3ByCxBa_sfJ2ls7nHS3QNgoX2Lyvfnpr0rxqALA/exec', {
+        method: 'POST',
+        contentType: 'application/json',
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log('Success:', result);
+        $("#myModal").modal('hide');
+        document.getElementById('newLocationForm').reset()
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(`Please try again`);
+    });
+
+    
+    return null;
+}
+
 
 window.onload = function() {
-    google.accounts.id.initialize({
-        client_id: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
-        callback: handleCredentialResponse
-    });
-    google.accounts.id.renderButton(
-        document.getElementById('g_id_signin'),
-        { theme: 'outline', size: 'large' }
-    );
-
-};
-
-function initClient() {
-    //gapi.auth2.init
-    gapi.auth2.getAuthInstance({
-        apiKey: apiKey,
-        clientId: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
-        discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-        scope: "https://www.googleapis.com/auth/spreadsheets"
-    }).then(function () {
-        // API and client library loaded and initialized, now you can use the Google Sheets API
-        console.log('it worked')
-    }, function(error) {
-        console.error("Error loading GAPI client for API", error);
-    });
+    loadDataAndInitMap()
 }
-
-
-
 
 
