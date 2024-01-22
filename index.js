@@ -339,9 +339,9 @@ async function loadDataAndInitMap() {
 
             const processedData = rows.map(row => {
                 while (row.length < headers.length) {
-                    row.push("NO INFO"); 
+                    row.push("-"); 
                 }
-                return row.map(cell => cell === "" ? "NO INFO" : cell);
+                return row.map(cell => cell === "" ? "-" : cell);
             });
             // Convert rows to objects
             sheetData = processedData.map(row => _.zipObject(headers, row));
@@ -360,6 +360,8 @@ async function loadDataAndInitMap() {
         console.error("Error fetching data or initializing map:", error);
     }
 }
+
+
 
 function updateSheetMarkers(radius){
     sheetMarkers.forEach(marker => marker.setMap(null));
@@ -403,7 +405,6 @@ function updateSheetMarkers(radius){
 
 
 
-
 function handleCredentialResponse(response) {
     // Send the ID token to your server for validation
     console.log("ENcoded JWT IF token: " +   response.credential);
@@ -424,7 +425,8 @@ window.onload = function() {
 };
 
 function initClient() {
-    gapi.client.init({
+    //gapi.auth2.init
+    gapi.auth2.init({
         apiKey: apiKey,
         clientId: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
         discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
