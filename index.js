@@ -405,7 +405,8 @@ function updateSheetMarkers(radius){
 
 function handleCredentialResponse(response) {
     // Send the ID token to your server for validation
-    console.log("ENcoded JWT IF token: " + response.credential);
+    console.log("ENcoded JWT IF token: " +   response.credential);
+
     /*
     fetch('/validate-token', {
         method: 'POST',
