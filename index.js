@@ -448,7 +448,7 @@ function saveFormData() {
 
     formData.splice(1,0,currCenter.lat,currCenter.lng);
 
-    
+    $("#myModal").modal('hide');
     // Proceed with the form data
     fetch('https://script.google.com/macros/s/AKfycbyXUH8rGqojkk1RUkF_D7spcToKu_y3ByCxBa_sfJ2ls7nHS3QNgoX2Lyvfnpr0rxqALA/exec', {
         method: 'POST',
@@ -457,8 +457,7 @@ function saveFormData() {
     })
     .then(response => response.json())
     .then(result => {
-        console.log('Success:', result);
-        $("#myModal").modal('hide');
+        console.log('Success:', result);  
         document.getElementById('newLocationForm').reset()
     })
     .catch(error => {
