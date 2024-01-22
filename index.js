@@ -399,27 +399,14 @@ function updateSheetMarkers(radius){
 
 }
 
-function initClient() {
-    gapi.client.init({
-        apiKey: 'AIzaSyByTYB1RNrZbrOduZgnVIuwEgS9mAZJl9Q',
-        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-        clientId: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
-        scope: 'https://www.googleapis.com/auth/spreadsheets'
-    }).then(function () {
-        gapi.auth2.getAuthInstance().signIn();
-        loadDataAndInitMap()
-        // Handle successful initialization
-    }).catch(function (error) {
-        // Handle error
-    });
-}
-
-initClient();
 
 
-/*
+
+
 function handleCredentialResponse(response) {
     // Send the ID token to your server for validation
+    console.log("ENcoded JWT IF token: " + response.credential);
+    /*
     fetch('/validate-token', {
         method: 'POST',
         headers: {
@@ -438,6 +425,7 @@ function handleCredentialResponse(response) {
         }
     })
     .catch(error => console.error('Error:', error));
+    */
 }
 
 window.onload = function() {
@@ -451,5 +439,5 @@ window.onload = function() {
     );
 };
 
-*/
+
 
