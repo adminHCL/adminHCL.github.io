@@ -399,5 +399,36 @@ function updateSheetMarkers(radius){
 
 }
 
-loadDataAndInitMap()
+function handleCredentialResponse(response) {
+    // Send the ID token to your server for validation
+    fetch('/validate-token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token: response.credential })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from your server
+        if (data.accessGranted) {
+            loadDataAndInitMap()
+            // Proceed with user access
+        } else {
+            // Access denied
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+window.onload = function() {
+    google.accounts.id.initialize({
+        client_id: '1098476773710-9g2gq06se834h1b0l16q59v4vvhoh66e.apps.googleusercontent.com',
+        callback: handleCredentialResponse
+    });
+    google.accounts.id.renderButton(
+        document.getElementById('g_id_signin'),
+        { theme: 'outline', size: 'large' }
+    );
+};
 
