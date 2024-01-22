@@ -407,12 +407,14 @@ function initClient() {
         scope: 'https://www.googleapis.com/auth/spreadsheets'
     }).then(function () {
         gapi.auth2.getAuthInstance().signIn();
+        loadDataAndInitMap()
         // Handle successful initialization
     }).catch(function (error) {
         // Handle error
     });
 }
-  
+
+initClient();
 
 
 /*
