@@ -334,7 +334,8 @@ async function loadDataAndInitMap() {
         .then(data => {
             let selectedLat = 3.2627169;
             let selectedLon = 113.0673422;
-            const headers = data.values[0];
+            //const headers = data.values[0];
+            const headers = ["LocationName", "Latitude","Longitude","Area", "DistanceDetail", "PortOfDischarge", "Rate", "RateDetails", "TransitDetails"]
             const rows = data.values.slice(1);
 
             const processedData = rows.map(row => {
@@ -351,6 +352,7 @@ async function loadDataAndInitMap() {
                 row["Longitude"] = parseFloat(row["Longitude"]);
                 row["Distance"] = haversineDistance(row["Latitude"], row["Longitude"], selectedLat, selectedLon);
             });
+
         })
         .catch(error => console.error('Error fetching data:', error)
         );
