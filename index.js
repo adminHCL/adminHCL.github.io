@@ -117,11 +117,6 @@ async function initMap() {
 
     });
     
-    const viewDataButton = document.getElementById('viewDataButton');
-    viewDataButton.addEventListener('click', () => {
-        const url ="https://docs.google.com/spreadsheets/d/1vVN9l3A2pfCmNVv70q_ormSfkJNtzpi-2qTHXnxnkiY/edit?usp=sharing"
-        window.open(url, '_blank');
-    });
 
     document.getElementById('portSelect').addEventListener('change', function() {
         portSelectedName = this.value
